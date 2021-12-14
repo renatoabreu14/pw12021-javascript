@@ -1,7 +1,7 @@
 var list = [
-    {"description" : "rice", "amount": 1, "value" : "5.40"},
+    /*{"description" : "rice", "amount": 1, "value" : "5.40"},
     {"description" : "beer", "amount": 12, "value" : "1.99"},
-    {"description" : "beef", "amount": 1, "value" : "25.00"}
+    {"description" : "beef", "amount": 1, "value" : "25.00"}*/
 ];
 
 function getTotal(list) {
@@ -35,6 +35,8 @@ function setList(list) {
     }
     table += '</tbody>';
     document.getElementById("listTable").innerHTML = table;
+    document.getElementById("totalValue").innerHTML = formatValue(getTotal(list));
+    saveListStorage(list);
 }
 
 function formatDescription(description) {
@@ -143,4 +145,18 @@ function validation() {
     return 1;
 }
 
-setList(list);
+function saveListStorage(list) {
+    var jsonStr = JSON.stringify(list);
+    localStorage.setItem("list", jsonStr);
+}
+
+function initListStorage() {
+    var listStorage = localStorage.getItem("list");
+    if (listStorage){
+        list = JSON.parse(listStorage);
+    }
+
+    setList(list);
+}
+
+initListStorage();
